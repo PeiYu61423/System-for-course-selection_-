@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>選課系統</title>
+</head>
+<body>
+    {% include 'alert.html' %}
+    <h1>選課系統</h1>
+    <form method="post" action="/login">
+        <label for="student_id">輸入學號：</label>
+        <input type="text" name="student_id" id="student_id">
+        <input type="submit" value="登入">
+    </form>
+</body>
+</html>

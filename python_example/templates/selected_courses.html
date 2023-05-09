@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>已選課程</title>
+</head>
+<body>
+    <h2>學生資訊</h2>
+    <p>學號：{{ student['s_id'] }}</p>
+    <p>姓名：{{ student['s_name'] }}</p>
+    <p>班級：{{ student['s_class'] }}</p>
+    <p>學分：{{ student['s_credit'] }}</p>
+    <form method="post" action="/logout">
+        <input type="submit" value="登出">
+    </form>
+
+    </br>
+    
+    {% include 'alert.html' %}
+    
+    </br>
+
+    <h2>已選課程</h2>
+    <table border=1 style="border-collapse:collapse;text-align:center;">
+        <thead>
+            <th width="45px"></th>
+            <th>課程代碼</th>
+            <th>課程名稱</th>
+            <th>開課系所</th>
+            <th>開課班級</th>
+            <th>年級</th>
+            <th>必/選修</th>
+            <th>學分</th>
+        </thead>
+        {% if student_course %}
+            <tbody>
+                {% for course in student_course %}
+                    <tr>
+                        <td>
+                            {% if student_course[course]['course_drop'] %}
+                                <form method="post" action="/drop">
+                                    <input type="hidden" name="drop_course_id" value="{{ student_course[course]['course_id'] }}">
+                                    <input type="submit" value="退選">
+                                </form>
+                            {% endif %}
+                        </td>
+                        <td>{{ student_course[course]['course_id'] }}</td>
+                        <td>{{ student_course[course]['course_title'] }}</td>
+                        <td>{{ student_course[course]['course_department'] }}</td>
+                        <td>{{ student_course[course]['course_dept_class'] }}</td>
+                        <td>{{ student_course[course]['course_dept_grade'] }}</td>
+                        <td>{{ student_course[course]['course_type'] }}</td>
+                        <td>{{ student_course[course]['course_credit'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        {% endif %}
+    </table>
+
+    </br>
+
+    <table border=1 style="border-collapse:collapse;text-align:center;">
+        <thead>
+            <th width="45px"></th>
+            <th>課程代碼</th>
+            <th>課程名稱</th>
+            <th>開課系所</th>
+            <th>開課班級</th>
+            <th>年級</th>
+            <th>必/選修</th>
+            <th>目前修課人數/修課人數</th>
+            <th>學分</th>
+            <th>上課時間</th>
+        </thead>
+        {% if courses %}
+            <tbody>
+                {% for course in courses %}
+                    <tr>
+                        <td>
+                            {% if courses[course]['course_select'] %}
+                                <form method="post" action="/select">
+                                    <input type="hidden" name="select_course_id" value="{{ courses[course]['course_id'] }}">
+                                    <input type="submit" value="加選">
+                                </form>
+                            {% endif %}
+                        </td>
+                        <td>{{ courses[course]['course_id'] }}</td>
+                        <td>{{ courses[course]['course_title'] }}</td>
+                        <td>{{ courses[course]['course_dept_name'] }}</td>
+                        <td>{{ courses[course]['course_dept_class'] }}</td>
+                        <td>{{ courses[course]['course_dept_grade'] }}</td>
+                        <td>{{ courses[course]['course_type'] }}</td>
+                        <td>{{ courses[course]['course_num_people'] }}/{{ courses[course]['course_max_people'] }}</td>
+                        <td>{{ courses[course]['course_credit'] }}</td>
+                        <td>{{ courses[course]['course_time_slot'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        {% endif %}
+    </table>
+
+</body>
+</html>
